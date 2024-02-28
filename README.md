@@ -1,7 +1,6 @@
+![alt tag](https://thawani.om/wp-content/uploads/2022/12/Logo-Thawani.png)
 
-
-
-### jkbroot/thawani
+# jkbroot/thawani
 A Laravel package for integrating the Thawani payment gateway into your application, providing a simple and fluent interface for creating payment sessions, handling customers, and managing transactions.
 
 # Features
