@@ -19,6 +19,7 @@ class ThawaniServiceProvider extends ServiceProvider {
 //        $loader->alias('ThawaniPay', \Jkbcoder\Thawani\ThawaniPayFacade::class);
 
         // Publish configuration file
+        // Publish configuration file
         $this->publishes([
             __DIR__ . '/../config/thawani.php' => config_path('thawani.php'),
         ], 'config');
