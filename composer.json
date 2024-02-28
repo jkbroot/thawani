@@ -1,0 +1,34 @@
+{
+    "name": "jkbroot/thawani",
+    "description": "A Laravel package for Thawani payment gateway",
+    "type": "library",
+    "keywords": ["thawani", "payment gateway", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jkbroot",
+            "email": "jkbcoder@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0"
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jkbroot\\Thawani\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jkbroot\\Thawani\\ThawaniServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
