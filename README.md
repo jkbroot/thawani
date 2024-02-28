@@ -198,13 +198,17 @@ Cancel session Response :
   "description" => "Checkout session cancelled successfully"
 ]
 ```
-- Get all Sessions :
+- list Sessions :
 
 ```php
-$sessions = $thawani->checkoutSessions->getAll();
+$sessions = $thawani->checkoutSessions->list();
+
+//for limit the lists and paginate between lists (limit,skip)
+$sessions = $thawani->checkoutSessions->list(10,0);
+
 ```
 
-Get all Sessions Response : 
+list Sessions Response : 
 ```php
 [
   "success" => true
@@ -250,4 +254,60 @@ $checkoutUrl = $thawani->checkoutSessions->createCheckoutUrl($data);
 - redirect_url: The URL to which you should redirect your customers to complete the payment process. This URL leads to Thawani's payment gateway, where the customer can enter their payment details securely.
 
 
+## 2 - Customers
 
+- create customer :
+```php
+$data = [
+        "client_customer_id" => "customer@example.com"
+    ];
+    
+$customer = $thawani->customers->create($data);
+```
+- create customer Response:
+
+```php
+[
+  "success" => true
+  "code" => 2001
+  "description" => "Customer added successfully"
+  "data" =>[
+    "id" => "cus_pbW3HE7eG81zRvJX"
+    "customer_client_id" => "customer@example.com"
+  ]
+]
+```
+
+- retrieve customer :
+
+```php
+$customerId = 'cus_pbW3HE7eG81zRvJX';
+$customer = $thawani->customers->retrieve($customerId);
+```
+
+- retrieve customer Response:
+
+```php
+[
+  "success" => true
+  "code" => 2000
+  "description" => "Customers retrieved successfully"
+  "data" => [
+    "id" => "cus_pbW3HE7eG81zRvJX"
+    "customer_client_id" => "customer@example.com"
+  ]
+]
+```
+
+- delete customer :
+```php
+$customerId = 'cus_pbW3HE7eG81zRvJX';
+$customer = $thawani->customers->delete($customerId);
+```
+- list customers :
+````php
+$customers = $thawani->customers->list();
+
+//for limit the lists and paginate between lists (limit,skip)
+$customers = $thawani->customers->list(10,0);
+````

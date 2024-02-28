@@ -62,6 +62,8 @@ class ThawaniService
             ->asJson()
             ->$method($uri, $data);
 
+        
+
         if ($response->successful()) {
             return $response->json();
         }

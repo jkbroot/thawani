@@ -26,9 +26,22 @@ class CheckoutSessionsService
         return $this->thawaniService->makeRequest('get', "/checkout/session/{$sessionId}");
     }
 
-    public function getAll()
+    public function list(?int $limit = null, ?int $skip = null)
     {
-        return $this->thawaniService->makeRequest('get', "/checkout/session/");
+        $queryParams = [];
+
+        if ($limit !== null && $limit > 0) {
+            $queryParams['limit'] = $limit;
+        }
+        if ($skip !== null && $skip >= 0) {
+            $queryParams['skip'] = $skip;
+        }
+
+        $queryString = http_build_query($queryParams);
+
+        $url = '/checkout/session' . (!empty($queryString) ? "?{$queryString}" : '');
+
+        return $this->thawaniService->makeRequest('get', $url);
     }
 
     public function cancel(string $sessionId)

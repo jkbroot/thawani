@@ -11,6 +11,23 @@ class PaymentIntentsService
         $this->thawaniService = $thawaniService;
     }
 
+    public function list(?int $limit = null, ?int $skip = null)
+    {
+        $queryParams = [];
+
+        if ($limit !== null && $skip !== null) {
+            $queryParams = [
+                'limit' => $limit,
+                'skip' => $skip,
+            ];
+        }
+        $queryString = http_build_query($queryParams);
+
+        $url = '/payment_intents' . ($queryString ? "?{$queryString}" : '');
+
+        return $this->thawaniService->makeRequest('get', $url);
+    }
+
     public function create(array $data)
     {
         return $this->thawaniService->makeRequest('post', '/payment_intents', $data);
