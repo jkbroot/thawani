@@ -1,12 +1,13 @@
 <?php
 
-namespace Jkbroot\Thawani\Services;
+namespace Jkbroot\Thawani\Api;
 
 use Jkbroot\Thawani\Helpers\ValidationHelper;
+use Jkbroot\Thawani\Services\ThawaniService;
 
-class CheckoutSessionsService
+class CheckoutSessions
 {
-    protected $thawaniService;
+    protected ThawaniService $thawaniService;
 
     private const REQUIRED_FIELDS = ['client_reference_id', 'mode', 'products', 'success_url', 'cancel_url', 'metadata'];
     private const PRODUCT_FIELDS = ['name', 'quantity', 'unit_amount'];

@@ -1,10 +1,12 @@
 <?php
 
-namespace Jkbroot\Thawani\Services;
+namespace Jkbroot\Thawani\Api;
 
-class RefundsService
+use Jkbroot\Thawani\Services\ThawaniService;
+
+class Refunds
 {
-    protected $thawaniService;
+    protected ThawaniService $thawaniService;
 
     public function __construct(ThawaniService $thawaniService)
     {
@@ -30,7 +32,7 @@ class RefundsService
      * @return array The list of refunds from the Thawani API.
      * @throws \Exception If the request fails or the API returns an error.
      */
-    public function listRefunds()
+    public function list()
     {
         return $this->thawaniService->makeRequest('get', '/refunds');
     }
@@ -40,7 +42,6 @@ class RefundsService
      *
      * @param string $refundId The ID of the refund to retrieve.
      * @return array The response from the Thawani API.
-     * @throws Exception If the request fails or the API returns an error.
      */
     public function retrieve(string $refundId)
     {

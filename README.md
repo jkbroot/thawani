@@ -1,13 +1,14 @@
 ![alt tag](https://thawani.om/wp-content/uploads/2022/12/Logo-Thawani.png)
 
 # jkbroot/thawani
-A Laravel package for integrating the Thawani payment gateway into your application, providing a simple and fluent interface for creating payment sessions, handling customers, and managing transactions.
+This Laravel package facilitates easy integration with the Thawani payment gateway, offering a straightforward and intuitive set of functionalities for payment session creation, customer management, and transaction handling, all within your Laravel application.
 
 # Features
 * Easy integration with Laravel applications
 * Support for creating and managing Thawani checkout sessions
 * Customer management utilities
 * Payment and refund handling
+* Support for payment intents
 
 **Requirements**
 * PHP 7.3 or higher
@@ -17,23 +18,21 @@ A Laravel package for integrating the Thawani payment gateway into your applicat
 ```bash
 composer require jkbroot/thawani
 ```
-Service Provider (Optional): Laravel 5.5 and above uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider. If you're using Laravel 5.4 or below, or have disabled auto-discovery, add the service provider to the providers array in config/app.php:
+This package supports Package Auto-Discovery, which was introduced in Laravel 5.5. Therefore, it doesn't require manual registration of the ServiceProvider in most cases.
+
+If you're using a version of Laravel where auto-discovery is not supported or have specifically disabled it, you need to register the ServiceProvider manually.
+
+Add the ServiceProvider to the providers array in config/app.php:
 
 ```php
-jkbroot\Thawani\ThawaniServiceProvider::class,
+
+'providers' => [
+    // Other Service Providers
+
+    Jkbroot\Thawani\ThawaniServiceProvider::class,
+],
+
 ```
-
-[//]: # (_**Facade &#40;Optional&#41;:**_)
-
-[//]: # ()
-[//]: # (If you'd like to use the facade for shorter syntax, add this to your aliases array in config/app.php:)
-
-[//]: # ()
-[//]: # (```php)
-
-[//]: # ('ThawaniPay', \jkbroot\Thawani\ThawaniPayFacade::class)
-
-[//]: # (```)
 
 **Configuration:** 
 
@@ -81,6 +80,8 @@ This creates an instance of the ThawaniPay class, allowing you to utilize its me
 
 - Create session :
 ```php
+use Jkbroot\Thawani\ThawaniPay;
+
 $thawani = new ThawaniPay();
 
 
@@ -311,3 +312,103 @@ $customers = $thawani->customers->list();
 //for limit the lists and paginate between lists (limit,skip)
 $customers = $thawani->customers->list(10,0);
 ````
+
+
+## 3 - Pyament Intents
+
+- list payment intent :
+
+```php
+$paymentIntents = $thawani->paymentIntents->list();
+
+//for limit the lists and paginate between lists (limit,skip)
+
+$paymentIntents = $thawani->paymentIntents->list(10,0);
+```
+- list payment intent Response:
+
+```php
+[
+  "success" => true
+  "code" => 2000
+  "description" => "sessions retrieved successfully"
+  "data" => [/*'array off Payment intents'*/]
+]
+```
+
+- create payment intent :
+
+```php
+$data = [
+    "amount" => 100,
+    "payment_method" => "card_zK5a7sd98wdwe78TbiSUyLUjann6xFx",
+    "description" => "Payment for order 123412",
+    "client_reference_id" => "123412",
+    "return_url" => "https://thw.om/success",
+    "metadata" => [
+        "Customer name" => "somename",
+    ],
+];
+
+$paymentIntent = $thawani->paymentIntents->create($data);
+```
+- create payment intent Response:
+
+```php
+{
+  "success": true,
+  "code": 0,
+  "description": "string",
+  "data": {
+    "id": "string",
+    "client_reference_id": "string",
+    "amount": 0,
+    "currency": "string",
+    "payment_method": "string",
+    "next_action": {
+      "url": "string",
+      "return_url": "string"
+    },
+    "status": "requires_payment_method",
+    "metadata": {},
+    "created_at": "2019-08-24T14:15:22Z",
+    "expire_at": "2019-08-24T14:15:22Z"
+  }
+}
+```
+
+# Here's a concise explanation for each method in the supported classes of your Laravel package for integrating the Thawani payment gateway:
+
+### CheckoutSessions
+- `create`: Initializes a new payment session.
+- `retrieve`: Fetches details of a specific session.
+- `cancel`: Cancels an existing session.
+- `list`: Lists all sessions with optional pagination.
+- `createCheckoutUrl`: Generates a URL for the payment checkout page.
+
+### Customers
+- `create`: Registers a new customer in the payment system.
+- `retrieve`: Retrieves information about a specific customer.
+- `delete`: Removes a customer from the system.
+- `list`: Lists all customers with optional pagination.
+
+### PaymentIntents
+- `create`: Creates a payment intent to initiate a transaction.
+- `retrieve`: Fetches details of a specific payment intent.
+- `cancel`: Cancels an unresolved payment intent.
+- `list`: Lists payment intents with optional pagination.
+- `confirm`: Confirms a payment intent, attempting to finalize the transaction.
+- `retrieveByClientReference`: Retrieves a payment intent using a client-provided reference ID.
+- `retrieveByInvoice`: Retrieves a payment intent using an invoice number.
+
+### PaymentMethods
+- `list`: Lists all payment methods associated with a given customer ID.
+- `delete`: Deletes a specified payment method from a customer's account.
+
+### Refunds
+- `create`: Initiates a refund for a specific transaction.
+- `retrieve`: Retrieves details of a specific refund.
+- `list`: Lists all refunds with optional pagination.
+
+This overview provides a quick guide to the functionalities available in your Laravel package for integrating Thawani payment services.
+

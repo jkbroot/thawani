@@ -1,10 +1,12 @@
 <?php
 
-namespace Jkbroot\Thawani\Services;
+namespace Jkbroot\Thawani\Api;
 
-class PaymentIntentsService
+use Jkbroot\Thawani\Services\ThawaniService;
+
+class PaymentIntents
 {
-    protected $thawaniService;
+    protected ThawaniService $thawaniService;
 
     public function __construct(ThawaniService $thawaniService)
     {
@@ -46,5 +48,18 @@ class PaymentIntentsService
     public function cancel(string $paymentIntentId)
     {
         return $this->thawaniService->makeRequest('post', "/payment_intents/{$paymentIntentId}/cancel");
+    }
+
+    // Retrieve by client reference
+    public function retrieveByClientReference($clientReferenceId): array
+    {
+        return $this->thawaniService->makeRequest('get', "/checkout/reference/{$clientReferenceId}");
+    }
+
+    // Retrieve by invoice
+
+    public function retrieveByInvoice($invoice): array
+    {
+        return $this->thawaniService->makeRequest('get', "/checkout/invoice/{$invoice}");
     }
 }
