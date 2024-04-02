@@ -75,4 +75,19 @@ class CheckoutSessions
     {
         ValidationHelper::validateSessionData($data, self::REQUIRED_FIELDS, self::PRODUCT_FIELDS);
     }
+
+
+    // Retrieve by client reference
+    public function retrieveByClientReference($clientReferenceId): array
+    {
+        return $this->thawaniService->makeRequest('get', "/checkout/reference/{$clientReferenceId}");
+    }
+
+    // Retrieve by invoice
+
+    public function retrieveByInvoice($invoice): array
+    {
+        return $this->thawaniService->makeRequest('get', "/checkout/invoice/{$invoice}");
+    }
+
 }

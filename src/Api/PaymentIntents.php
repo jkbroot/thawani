@@ -44,22 +44,14 @@ class PaymentIntents
     {
         return $this->thawaniService->makeRequest('get', "/payment_intents/{$paymentIntentId}");
     }
+    public function retrieveByClientReference(string $clientReferenceId)
+    {
+        return $this->thawaniService->makeRequest('get', "/payment_intents/{$clientReferenceId}/reference");
+    }
 
     public function cancel(string $paymentIntentId)
     {
         return $this->thawaniService->makeRequest('post', "/payment_intents/{$paymentIntentId}/cancel");
     }
 
-    // Retrieve by client reference
-    public function retrieveByClientReference($clientReferenceId): array
-    {
-        return $this->thawaniService->makeRequest('get', "/checkout/reference/{$clientReferenceId}");
-    }
-
-    // Retrieve by invoice
-
-    public function retrieveByInvoice($invoice): array
-    {
-        return $this->thawaniService->makeRequest('get', "/checkout/invoice/{$invoice}");
-    }
 }

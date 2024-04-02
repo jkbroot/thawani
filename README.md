@@ -385,6 +385,8 @@ $paymentIntent = $thawani->paymentIntents->create($data);
 - `cancel`: Cancels an existing session.
 - `list`: Lists all sessions with optional pagination.
 - `createCheckoutUrl`: Generates a URL for the payment checkout page.
+- `retrieveByClientReference`: Retrieves a session using a client-provided reference ID.
+- `retrieveByInvoice`: Retrieves a session using an invoice number.
 
 ### Customers
 - `create`: Registers a new customer in the payment system.
@@ -398,8 +400,7 @@ $paymentIntent = $thawani->paymentIntents->create($data);
 - `cancel`: Cancels an unresolved payment intent.
 - `list`: Lists payment intents with optional pagination.
 - `confirm`: Confirms a payment intent, attempting to finalize the transaction.
-- `retrieveByClientReference`: Retrieves a payment intent using a client-provided reference ID.
-- `retrieveByInvoice`: Retrieves a payment intent using an invoice number.
+
 
 ### PaymentMethods
 - `list`: Lists all payment methods associated with a given customer ID.
